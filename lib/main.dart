@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'question.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(Quizzler());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+class Quizzler extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,29 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Widget> scoreKeeper = [];
+  List<String> questions = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green',
+  ];
+
+  List<bool> answers = [
+    false,
+    true,
+    true,
+  ];
+
+  Question q1 = Question(
+      q: 'You can lead a cow down stairs but not up stairs.', a: false);
+
+  Question q2 = Question(
+      q: 'Approximately one quarter of human bones are in the feet.', a: true);
+
+  Question q3 = Question(q: 'A slug\'s blood is green', a: true);
+
+  int questionNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +71,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
-                  'This is where the question comes.',
+                  questions[questionNumber],
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 25.0,
@@ -72,7 +95,18 @@ class _QuizPageState extends State<QuizPage> {
                     fontSize: 20.0,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  bool correctAns = answers[questionNumber];
+                  if (correctAns == true) {
+                    print('got it right!!');
+                  } else {
+                    print('got it wrong!!');
+                  }
+                  setState(() {
+                    questionNumber++;
+                    print(questionNumber);
+                  });
+                },
               ),
             ),
           ),
@@ -90,9 +124,23 @@ class _QuizPageState extends State<QuizPage> {
                     fontSize: 20.0,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  bool correctAns = answers[questionNumber];
+                  if (correctAns == false) {
+                    print('got it right!!');
+                  } else {
+                    print('got it wrong!!');
+                  }
+                  setState(() {
+                    questionNumber++;
+                    print(questionNumber);
+                  });
+                },
               ),
             ),
+          ),
+          Row(
+            children: scoreKeeper,
           )
         ],
       ),
